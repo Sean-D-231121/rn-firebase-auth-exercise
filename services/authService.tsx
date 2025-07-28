@@ -1,6 +1,6 @@
 // TODO: Create Firebase Auth Functions
 
-import { signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { auth } from "../firebase"
 
 
@@ -19,6 +19,23 @@ export const loginUser = (email : string, password: string) =>{
       });
 
 }
+
+export const signupUser = (email: string, password: string) => {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed up
+      const User = userCredential.user;
+      console.log("User logged in:", User.email);
+
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("Error message:", errorMessage);
+      // ..
+    });
+};
 
 export const logoutUser =() =>{
     signOut(auth)

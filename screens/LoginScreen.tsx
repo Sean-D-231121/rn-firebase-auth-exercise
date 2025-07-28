@@ -2,7 +2,7 @@ import { TextInput, SafeAreaView, StyleSheet, Text, View, TouchableOpacity } fro
 import React, { useState } from 'react'
 import { loginUser } from '../services/authService';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +36,14 @@ const LoginScreen = () => {
             <Text style={styles.buttonText}>Login Button</Text>
         </TouchableOpacity>
 
-        {/* TODO: Add Register Navigation */}
+        <TouchableOpacity
+                  style={styles.secondaryButton}
+                  onPress={() => navigation.navigate("Login")}
+                >
+                  <Text style={styles.secondaryButtonText}>
+                    Already have an account? Login
+                  </Text>
+                </TouchableOpacity>
 
       </View>  
       
@@ -69,5 +76,12 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         color: 'white'
-    }
+    },
+    secondaryButton: {
+    marginTop: 15,
+  },
+  secondaryButtonText: {
+    color: "blue",
+    textAlign: "center",
+  },
 })

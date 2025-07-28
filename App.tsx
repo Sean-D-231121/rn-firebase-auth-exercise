@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import ProfileScreen from './screens/ProfileScreen';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
+import RegistrationScreen from './screens/RegistrationScreen';
 
 // TODO: Navigation Container
 const Stack = createNativeStackNavigator();
@@ -35,7 +36,16 @@ export default function App() {
       ) : (
         // Show Auth Screens when not logged in
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen
+            name="SignUp"
+            component={RegistrationScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       )}
       ;

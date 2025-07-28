@@ -1,5 +1,4 @@
-// TODO: Create Register Screen & Register Functionality
-import React from "react";
+import React, { useState } from "react";
 import {
   TextInput,
   SafeAreaView,
@@ -8,40 +7,67 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-const RegistrationScreen =()=>{
+import { signupUser } from "../services/authService";
 
-    return(
-        <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-              <View style={styles.container}>
-                <Text style={styles.title}>Login</Text>
-        
-                <TextInput
-                    style={styles.inputField}
-                    placeholder="Your Email"
-                    onChangeText={newText => setEmail(newText)}
-                    defaultValue={email}
-                    />
-        
-                <TextInput
-                    style={styles.inputField}
-                    placeholder="Your Password"
-                    onChangeText={newText => setPassword(newText)}
-                    defaultValue={password}
-                    secureTextEntry={true}
-                    />
-        
-                <TouchableOpacity style={styles.button} onPress={login}>
-                    <Text style={styles.buttonText}>Login Button</Text>
-                </TouchableOpacity>
-        
-                {/* TODO: Add Register Navigation */}
-        
-              </View>  
-              
-            </SafeAreaView>
-    )
-}
-export default RegistrationScreen
+const RegistrationScreen = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+
+  const handleRegister = () => {
+    if (password === checkPassword) {
+      signupUser(email, password);
+    } else {
+      alert("Passwords do not match");
+    }
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Sign Up</Text>
+
+        <TextInput
+          style={styles.inputField}
+          placeholder="Your Email"
+          onChangeText={(newText) => setEmail(newText)}
+          value={email}
+        />
+
+        <TextInput
+          style={styles.inputField}
+          placeholder="Your Password"
+          onChangeText={(newText) => setPassword(newText)}
+          value={password}
+          secureTextEntry={true}
+        />
+
+        <TextInput
+          style={styles.inputField}
+          placeholder="Retype Password"
+          onChangeText={(newText) => setCheckPassword(newText)}
+          value={checkPassword}
+          secureTextEntry={true}
+        />
+
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.secondaryButton}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={styles.secondaryButtonText}>
+            Already have an account? Login
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default RegistrationScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -49,6 +75,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
   inputField: {
     height: 40,
@@ -66,5 +94,12 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     color: "white",
+  },
+  secondaryButton: {
+    marginTop: 15,
+  },
+  secondaryButtonText: {
+    color: "blue",
+    textAlign: "center",
   },
 });
